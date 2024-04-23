@@ -1,7 +1,7 @@
 package com.example.unisync.Repository;
 
 import com.example.unisync.Model.Course;
-import com.example.unisync.Model.User;
+import com.example.unisync.Model.AppUser;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -13,9 +13,9 @@ public interface CourseRepository extends BaseRepository<Course, Long> {
     @Query("SELECT c FROM Course c WHERE c.id = :courseId")
     Optional<Course> findById(@Param("courseId") Long courseId);
 
-    List<Course> findByCreatedBy(User createdBy);
+    List<Course> findByCreatedBy(AppUser createdBy);
 
-    List<Course> findByAdmin(User admin);
+    List<Course> findByAdmin(AppUser admin);
 
     @Query("SELECT c FROM Course c WHERE c.meetings IS NOT EMPTY")
     List<Course> findCoursesWithMeetings();
@@ -24,5 +24,5 @@ public interface CourseRepository extends BaseRepository<Course, Long> {
     Course findCourseWithMessages(@Param("courseId") Long courseId);
 
     @Query("SELECT c.students FROM Course c WHERE c.id = :courseId")
-    List<User> findUsersByCourseId(Long courseId);
+    List<AppUser> findUsersByCourseId(Long courseId);
 }

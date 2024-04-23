@@ -10,11 +10,11 @@ public class Course extends BaseModel {
 
     @ManyToOne
     @JoinColumn(name = "created_by_id")
-    private User createdBy;
+    private AppUser createdBy;
 
     @ManyToOne
     @JoinColumn(name = "admin_id")
-    private User admin;
+    private AppUser admin;
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private List<Meeting> meetings = new ArrayList<>();
@@ -30,7 +30,7 @@ public class Course extends BaseModel {
     )
 
 
-    private List<User> students = new ArrayList<>();
+    private List<AppUser> students = new ArrayList<>();
 
     public Course(Long id) {
         super(id);
@@ -40,19 +40,19 @@ public class Course extends BaseModel {
         super();
     }
 
-    public User getCreatedBy() {
+    public AppUser getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(User createdBy) {
+    public void setCreatedBy(AppUser createdBy) {
         this.createdBy = createdBy;
     }
 
-    public User getAdmin() {
+    public AppUser getAdmin() {
         return admin;
     }
 
-    public void setAdmin(User admin) {
+    public void setAdmin(AppUser admin) {
         this.admin = admin;
     }
 
@@ -72,11 +72,11 @@ public class Course extends BaseModel {
         this.messages = messages;
     }
 
-    public List<User> getStudents() {
+    public List<AppUser> getStudents() {
         return students;
     }
 
-    public void setStudents(List<User> students) {
+    public void setStudents(List<AppUser> students) {
         this.students = students;
     }
 }

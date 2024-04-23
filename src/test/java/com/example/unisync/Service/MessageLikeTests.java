@@ -2,7 +2,7 @@ package com.example.unisync.Service;
 
 import com.example.unisync.Model.Message;
 import com.example.unisync.Model.MessageLike;
-import com.example.unisync.Model.User;
+import com.example.unisync.Model.AppUser;
 import com.example.unisync.Repository.MessageLikeRepository;
 import com.example.unisync.Repository.MessageRepository;
 import com.example.unisync.Repository.UserRepository;
@@ -37,7 +37,7 @@ public class MessageLikeTests {
 
     @Test
     void likeMessage() {
-        User user = new User();
+        AppUser user = new AppUser();
         Message message = new Message();
 
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));

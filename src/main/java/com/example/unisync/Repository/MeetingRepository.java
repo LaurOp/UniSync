@@ -1,7 +1,7 @@
 package com.example.unisync.Repository;
 
 import com.example.unisync.Model.Meeting;
-import com.example.unisync.Model.User;
+import com.example.unisync.Model.AppUser;
 import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDateTime;
@@ -13,6 +13,6 @@ public interface MeetingRepository extends BaseRepository<Meeting, Long>{
     List<Meeting> findByCourseId(Long courseId);
 
     @Query("SELECT m FROM Meeting m WHERE m.createdBy = :createdBy AND m.startTime > :startTime")
-    List<Meeting> findByCreatedByAndStartTimeAfter(User createdBy, LocalDateTime startTime);
+    List<Meeting> findByCreatedByAndStartTimeAfter(AppUser createdBy, LocalDateTime startTime);
 
 }

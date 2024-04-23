@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class User extends BaseModel {
+public class AppUser extends BaseModel {
 
     private boolean isUniversity;
     private boolean isTeacher;
@@ -17,11 +17,11 @@ public class User extends BaseModel {
     private String password;
     private String email;
 
-    public User(Long id) {
+    public AppUser(Long id) {
         super(id);
     }
 
-    public User() {
+    public AppUser() {
         super();
     }
 

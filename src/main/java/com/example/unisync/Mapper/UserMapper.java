@@ -1,14 +1,14 @@
 package com.example.unisync.Mapper;
 
 import com.example.unisync.DTO.UserDTO;
-import com.example.unisync.Model.User;
+import com.example.unisync.Model.AppUser;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UserMapper {
 
-    public User map (UserDTO userDTO){
-        User user = new User();
+    public AppUser map (UserDTO userDTO){
+        AppUser user = new AppUser();
         user.setUniversity(userDTO.isUniversity());
         user.setTeacher(userDTO.isTeacher());
         user.setUsername(userDTO.getUsername());
@@ -17,7 +17,7 @@ public class UserMapper {
         return user;
     }
 
-    public UserDTO map (User user){
+    public UserDTO map (AppUser user){
         UserDTO userDTO = new UserDTO();
         userDTO.setUniversity(user.isUniversity());
         userDTO.setTeacher(user.isTeacher());

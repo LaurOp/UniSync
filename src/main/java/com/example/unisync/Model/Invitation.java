@@ -13,7 +13,7 @@ public class Invitation extends BaseModel {
 
     @ManyToOne
     @JoinColumn(name = "invited_user_id")
-    private User invitedUser;
+    private AppUser invitedUser;
 
     public Meeting getMeeting() {
         return meeting;
@@ -23,11 +23,11 @@ public class Invitation extends BaseModel {
         this.meeting = meeting;
     }
 
-    public User getInvitedUser() {
+    public AppUser getInvitedUser() {
         return invitedUser;
     }
 
-    public void setInvitedUser(User invitedUser) {
+    public void setInvitedUser(AppUser invitedUser) {
         this.invitedUser = invitedUser;
     }
 }

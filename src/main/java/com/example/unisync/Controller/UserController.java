@@ -4,7 +4,7 @@ import com.example.unisync.DTO.UserDTO;
 import com.example.unisync.Exception.ValidationException;
 import com.example.unisync.Mapper.UserMapper;
 import com.example.unisync.Model.Course;
-import com.example.unisync.Model.User;
+import com.example.unisync.Model.AppUser;
 import com.example.unisync.Service.CourseService;
 import com.example.unisync.Service.UserService;
 import jakarta.validation.Valid;
@@ -34,7 +34,7 @@ public class UserController extends BaseController{
     @PostMapping("/{userId}/CreateCourse")
     public ResponseEntity<String> createCourseForUserEndpoint(@PathVariable Long userId, @RequestBody Course course) {
         try {
-            Optional<User> user = userService.getById(userId);
+            Optional<AppUser> user = userService.getById(userId);
             if (user.isEmpty()) {
                 return new ResponseEntity<>(USER_NOT_FOUND, HttpStatus.NOT_FOUND);
             }
@@ -49,7 +49,7 @@ public class UserController extends BaseController{
     @PostMapping("/create")
     public ResponseEntity<UserDTO> createUserEndpoint(@Valid @RequestBody UserDTO user) {
         try {
-            User createdUser = userService.createUser(userMapper.map(user));
+            AppUser createdUser = userService.createUser(userMapper.map(user));
             return new ResponseEntity<>(userMapper.map(createdUser), HttpStatus.CREATED);
         } catch (ValidationException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -64,14 +64,14 @@ public class UserController extends BaseController{
             @PathVariable Long courseId) {
 
         try {
-            Optional<User> userOptional = userService.getById(userId);
+            Optional<AppUser> userOptional = userService.getById(userId);
             Optional<Course> courseOptional = courseService.getById(courseId);
 
             if (userOptional.isEmpty() || courseOptional.isEmpty()) {
                 return new ResponseEntity<>(USER_OR_COURSE_NOT_FOUND, HttpStatus.NOT_FOUND);
             }
 
-            User user = userOptional.get();
+            AppUser user = userOptional.get();
             Course course = courseOptional.get();
 
             if (user.isTeacher()){
@@ -93,14 +93,14 @@ public class UserController extends BaseController{
             @PathVariable Long courseId) {
 
         try {
-            Optional<User> userOptional = userService.getById(userId);
+            Optional<AppUser> userOptional = userService.getById(userId);
             Optional<Course> courseOptional = courseService.getById(courseId);
 
             if (userOptional.isEmpty() || courseOptional.isEmpty()) {
                 return new ResponseEntity<>(USER_OR_COURSE_NOT_FOUND, HttpStatus.NOT_FOUND);
             }
 
-            User user = userOptional.get();
+            AppUser user = userOptional.get();
             Course course = courseOptional.get();
 
             if (!user.isUniversity()) {
@@ -122,14 +122,14 @@ public class UserController extends BaseController{
             @PathVariable Long courseId) {
 
         try {
-            Optional<User> userOptional = userService.getById(userId);
+            Optional<AppUser> userOptional = userService.getById(userId);
             Optional<Course> courseOptional = courseService.getById(courseId);
 
             if (userOptional.isEmpty() || courseOptional.isEmpty()) {
                 return new ResponseEntity<>(USER_OR_COURSE_NOT_FOUND, HttpStatus.NOT_FOUND);
             }
 
-            User student = userOptional.get();
+            AppUser student = userOptional.get();
             Course course = courseOptional.get();
 
             if (student.getEnrolledCourses().contains(course)) {

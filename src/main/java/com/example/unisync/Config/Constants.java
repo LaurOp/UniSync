@@ -36,6 +36,7 @@ public class Constants {
     public static final String ONLY_LETTERS_OR_DIGITS = "Username must contain only letters or digits";
     public static final String INVALID_EMAIL_FORMAT = "Invalid email format";
     public static final String AT_LEAST_4_CHARACTERS = "Password must contain at least 4 characters";
+    public static final String USER_DELETED_SUCCES = "User deleted successfully";
     private void AppConstants() {
     }
 }
