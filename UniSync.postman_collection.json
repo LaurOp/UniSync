@@ -1,0 +1,668 @@
+{
+	"info": {
+		"_postman_id": "9b7c8393-d546-4e4b-9451-d521c722b725",
+		"name": "UniSync",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17906935"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "Healthcheck",
+					"item": [
+						{
+							"name": "Welcome page",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8081/auth/welcome",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"auth",
+										"welcome"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "User Profile",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJMYXVyVXNlciIsImlhdCI6MTcxMzk2Mjc5MywiZXhwIjoxNzEzOTY0NTkzfQ.LZ6EP5ya7EDJzTfSgfFV4CmC3aeMhe3Oc-h9lTyxbZU",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8081/auth/user/profile",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"auth",
+										"user",
+										"profile"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Teacher Profile",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJMYXVyVSIsImlhdCI6MTcxMzk1NzkxMCwiZXhwIjoxNzEzOTU5NzEwfQ.OSUh9k0TSnDN8q1_53pr02rjAfyTDg02NIsQN7RnGGY",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8081/auth/user/teacher",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"auth",
+										"user",
+										"teacher"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "University Profile",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJMYXVyMTIzIiwiaWF0IjoxNzEzOTU1MDA4LCJleHAiOjE3MTM5NTY4MDh9.rsOUqqRoPlI5egFQy7M97Rp7xBt5WWWixiz_xGsW4ps",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8081/auth/user/university",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"auth",
+										"user",
+										"university"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "New User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"LaurU\",\r\n    \"password\": \"123\",\r\n    \"email\": \"abc@a.a\",\r\n    \"roles\": \"UNIVERSITY\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/auth/addNewUser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"auth",
+								"addNewUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Generate Token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"LaurUser\",\r\n    \"password\": \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/auth/generateToken",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"auth",
+								"generateToken"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user-course",
+			"item": [
+				{
+					"name": "Create course by user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJMYXVyVCIsImlhdCI6MTcxMzk1OTQyOSwiZXhwIjoxNzEzOTYxMjI5fQ.XDmKShYjqJoOK3fvW7nPDYw5EAP1A-9xrAtUVFch2as",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/users/CreateCourse",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"users",
+								"CreateCourse"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assign Course id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJMYXVyUyIsImlhdCI6MTcxMzk2MTU0NiwiZXhwIjoxNzEzOTYzMzQ2fQ.9b3-TCZ-VeDPtmxi0nJaUcZsaIr7tUPJfxLIkjqCfr8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/users/2/assign-course-admin/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"users",
+								"2",
+								"assign-course-admin",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add user to course",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJMYXVyVSIsImlhdCI6MTcxMzk2MjI0MCwiZXhwIjoxNzEzOTY0MDQwfQ.jUTzicA_-45SVF9mucHJ5nrcBPM-Ar9YAQD_8vBFBHE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/users/2/add-student-to-course/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"users",
+								"2",
+								"add-student-to-course",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Join Course id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJMYXVyMiIsImlhdCI6MTcxMzk2MjExOCwiZXhwIjoxNzEzOTYzOTE4fQ.I-nk8yaDzcAP7U5RuhPaQuoE8fsekekEDwTIkZv0ZnY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/users/enroll-in-course/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"users",
+								"enroll-in-course",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJMYXVyVSIsImlhdCI6MTcxMzk2MzExMCwiZXhwIjoxNzEzOTY0OTEwfQ.HB1e6qWwFUn7K0GWQ0tU-1W0aSc6J56rfA2OgJqgeoc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/users/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"users",
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "meeting",
+			"item": [
+				{
+					"name": "Create meeting by teacher for course",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJMYXVyVCIsImlhdCI6MTcxMzk2ODQ5MiwiZXhwIjoxNzEzOTcwMjkyfQ.WYOQG2HCBY1buS-J2OTyw5A2LBKm7DddeSNdLjutJks",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"Team Meeting\",\r\n  \"startTime\": \"2025-02-01T10:00:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/meetings/create/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"meetings",
+								"create",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All meeting in a course",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJMYXVyVCIsImlhdCI6MTcxMzk2NDI0MCwiZXhwIjoxNzEzOTY2MDQwfQ.Dn509CqPCjIkXyHVVbB0lXU2tvivP386F1YO3XnnB1w",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/meetings/byCourse/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"meetings",
+								"byCourse",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "attendance",
+			"item": [
+				{
+					"name": "Mark Attendance",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJMYXVyUyIsImlhdCI6MTcxMzk2ODIzMiwiZXhwIjoxNzEzOTcwMDMyfQ.jX_fdR3sUIf3ItBdKH0VdJ_Mne4a5vQNWL7SANXmYP8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"meetingId\": 1,\r\n  \"attendanceStatus\": \"WILL_ATTEND\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/attendance/mark-as",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"attendance",
+								"mark-as"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get future meetings user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJMYXVyUyIsImlhdCI6MTcxMzk2ODQ2OCwiZXhwIjoxNzEzOTcwMjY4fQ.oib93RTigNx0kuncRoDpSn8Rk6l4dbTWeo8569gZnNo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/attendance/future",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"attendance",
+								"future"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "message",
+			"item": [
+				{
+					"name": "Write message",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJMYXVyUyIsImlhdCI6MTcxMzk2ODc2MywiZXhwIjoxNzEzOTcwNTYzfQ.OgbfiyANHC8t1l_YnXaclg_OgwgbZxcV-gwSo79_7KE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"courseId\": 1,\r\n  \"content\": \"Hello, this is a test message!\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/message/post",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"message",
+								"post"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Like message",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJMYXVyUyIsImlhdCI6MTcxMzk2OTE2OSwiZXhwIjoxNzEzOTcwOTY5fQ.L6bZ_0jyC_QSh_nGCY6JLk7Op-LV5XwK6eEz52q_RzI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/message/like/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"message",
+								"like",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unlike message",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJMYXVyUyIsImlhdCI6MTcxMzk2OTI1NiwiZXhwIjoxNzEzOTcxMDU2fQ.xBQj4C4D12mZ10KNyX79KQj9edQsyftgtb6oyKsbTSc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/message/unlike/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"message",
+								"unlike",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reply",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJMYXVyUyIsImlhdCI6MTcxMzk2OTM5NywiZXhwIjoxNzEzOTcxMTk3fQ.57Db5DPoXGC4F0SIwskBZDP1ykJnUNJZiYdP0LIqsDA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"courseId\": 1,\r\n  \"parentMessageId\": 1,\r\n  \"content\": \"This is a test reply 2.\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/message/reply",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"message",
+								"reply"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
