@@ -46,4 +46,7 @@ public class UserInfo {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<MeetingAttendance> meetingAttendances = new ArrayList<>();
 
+    public UserInfo(long l) {
+        this.id = l;
+    }
 }

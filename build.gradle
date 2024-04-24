@@ -27,6 +27,9 @@ ext {
 
 dependencies {
 	runtimeOnly 'com.h2database:h2:2.2.222'
+	testImplementation 'ch.qos.logback:logback-classic:1.5.6'
+	implementation 'ch.qos.logback:logback-core:1.5.6'
+	implementation 'org.slf4j:slf4j-api:2.0.13'
 	implementation 'javax.xml.bind:jaxb-api:2.3.0'
 	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'org.springframework.boot:spring-boot-starter-security'

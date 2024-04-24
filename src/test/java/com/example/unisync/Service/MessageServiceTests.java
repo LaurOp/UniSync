@@ -5,6 +5,7 @@ import com.example.unisync.DTO.ReplyDTO;
 import com.example.unisync.Exception.UnauthorizedException;
 import com.example.unisync.Model.Course;
 import com.example.unisync.Model.Message;
+import com.example.unisync.Model.UserInfo;
 import com.example.unisync.Repository.CourseRepository;
 import com.example.unisync.Repository.MessageRepository;
 import com.example.unisync.Repository.ReplyRepository;
@@ -50,7 +51,7 @@ public class MessageServiceTests {
 
     @Test
     void postMessage_UnauthorizedException() {
-        AppUser user = new AppUser(1L);
+        UserInfo user = new UserInfo(1L);
         user.setEnrolledCourses(Collections.emptyList());
 
         Course course = new Course(1L);
@@ -71,7 +72,7 @@ public class MessageServiceTests {
 
     @Test
     void postReply_UnauthorizedException() {
-        AppUser user = new AppUser(1L);
+        UserInfo user = new UserInfo(1L);
         user.setEnrolledCourses(Collections.emptyList());
 
         Course course = new Course(1L);
