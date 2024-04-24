@@ -1,4 +1,4 @@
-package com.example.unisync.Config.Auth;
+package com.example.unisync.Repository;
 
 import com.example.unisync.Model.UserInfo;
 import org.springframework.data.jpa.repository.JpaRepository;

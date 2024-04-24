@@ -12,7 +12,6 @@ public class MeetingAttendanceMapper {
     public MeetingAttendanceDTO map(MeetingAttendance meetingAttendance) {
         MeetingAttendanceDTO meetingAttendanceDTO = new MeetingAttendanceDTO();
         meetingAttendanceDTO.setMeetingId(meetingAttendance.getMeeting().getId());
-        meetingAttendanceDTO.setUserId(meetingAttendance.getUser().getId());
         meetingAttendanceDTO.setAttendanceStatus(meetingAttendance.getAttendanceStatus());
         return meetingAttendanceDTO;
     }

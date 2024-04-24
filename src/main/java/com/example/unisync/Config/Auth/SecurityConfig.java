@@ -1,5 +1,6 @@
 package com.example.unisync.Config.Auth;
 
+import com.example.unisync.Service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

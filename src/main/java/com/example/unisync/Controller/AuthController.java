@@ -1,8 +1,8 @@
 package com.example.unisync.Controller;
 
-import com.example.unisync.Config.Auth.AuthRequest;
+import com.example.unisync.DTO.AuthRequest;
 import com.example.unisync.Config.Auth.JwtService;
-import com.example.unisync.Config.Auth.UserInfoService;
+import com.example.unisync.Service.UserInfoService;
 import com.example.unisync.Model.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,15 +15,16 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/auth")
 public class AuthController extends BaseController{
+    private final UserInfoService service;
+    private final JwtService jwtService;
+    private final AuthenticationManager authenticationManager;
 
     @Autowired
-    private UserInfoService service;
-
-    @Autowired
-    private JwtService jwtService;
-
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    public AuthController(UserInfoService userInfoService, JwtService jwtService, AuthenticationManager authenticationManager) {
+        this.service = userInfoService;
+        this.jwtService = jwtService;
+        this.authenticationManager = authenticationManager;
+    }
 
     @GetMapping("/welcome")
     public String welcomePage() {

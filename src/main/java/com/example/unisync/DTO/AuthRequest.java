@@ -1,4 +1,4 @@
-package com.example.unisync.Config.Auth;
+package com.example.unisync.DTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

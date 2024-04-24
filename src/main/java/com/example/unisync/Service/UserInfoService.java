@@ -1,6 +1,8 @@
-package com.example.unisync.Config.Auth;
+package com.example.unisync.Service;
 
+import com.example.unisync.Config.Auth.UserInfoDetails;
 import com.example.unisync.Model.UserInfo;
+import com.example.unisync.Repository.UserInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

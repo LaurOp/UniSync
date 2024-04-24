@@ -1,5 +1,6 @@
 package com.example.unisync.Config.Auth;
 
+import com.example.unisync.Service.UserInfoService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
