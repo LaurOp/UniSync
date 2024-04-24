@@ -1,16 +1,16 @@
 package com.example.unisync.Controller;
 
-import com.example.unisync.DTO.UserDTO;
-import com.example.unisync.Exception.ValidationException;
 import com.example.unisync.Mapper.UserMapper;
 import com.example.unisync.Model.Course;
-import com.example.unisync.Model.AppUser;
+import com.example.unisync.Model.UserInfo;
 import com.example.unisync.Service.CourseService;
 import com.example.unisync.Service.UserService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -32,9 +32,13 @@ public class UserController extends BaseController{
     }
 
     @PostMapping("/{userId}/CreateCourse")
+    @PreAuthorize("hasAuthority('UNIVERSITY')")
     public ResponseEntity<String> createCourseForUserEndpoint(@PathVariable Long userId, @RequestBody Course course) {
         try {
-            Optional<AppUser> user = userService.getById(userId);
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            UserInfo currentUser = (UserInfo) authentication.getPrincipal();
+
+            Optional<UserInfo> user = userService.getById(userId);
             if (user.isEmpty()) {
                 return new ResponseEntity<>(USER_NOT_FOUND, HttpStatus.NOT_FOUND);
             }
@@ -46,17 +50,17 @@ public class UserController extends BaseController{
         }
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<UserDTO> createUserEndpoint(@Valid @RequestBody UserDTO user) {
-        try {
-            AppUser createdUser = userService.createUser(userMapper.map(user));
-            return new ResponseEntity<>(userMapper.map(createdUser), HttpStatus.CREATED);
-        } catch (ValidationException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+//    @PostMapping("/create")
+//    public ResponseEntity<UserDTO> createUserEndpoint(@Valid @RequestBody UserDTO user) {
+//        try {
+//            AppUser createdUser = userService.createUser(userMapper.map(user));
+//            return new ResponseEntity<>(userMapper.map(createdUser), HttpStatus.CREATED);
+//        } catch (ValidationException e) {
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        } catch (Exception e) {
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
 
     @PutMapping("/{userId}/assign-course-admin/{courseId}")
     public ResponseEntity<String> assignCourseAdmin(
@@ -64,17 +68,17 @@ public class UserController extends BaseController{
             @PathVariable Long courseId) {
 
         try {
-            Optional<AppUser> userOptional = userService.getById(userId);
+            Optional<UserInfo> userOptional = userService.getById(userId);
             Optional<Course> courseOptional = courseService.getById(courseId);
 
             if (userOptional.isEmpty() || courseOptional.isEmpty()) {
                 return new ResponseEntity<>(USER_OR_COURSE_NOT_FOUND, HttpStatus.NOT_FOUND);
             }
 
-            AppUser user = userOptional.get();
+            UserInfo user = userOptional.get();
             Course course = courseOptional.get();
 
-            if (user.isTeacher()){
+            if (user.getRoles().contains("TEACHER")){
                 course.setAdmin(user);
                 courseService.save(course);
                 return new ResponseEntity<>(USER_ASSIGNED_AS_COURSE_ADMIN_SUCCESSFULLY, HttpStatus.OK);
@@ -93,17 +97,17 @@ public class UserController extends BaseController{
             @PathVariable Long courseId) {
 
         try {
-            Optional<AppUser> userOptional = userService.getById(userId);
+            Optional<UserInfo> userOptional = userService.getById(userId);
             Optional<Course> courseOptional = courseService.getById(courseId);
 
             if (userOptional.isEmpty() || courseOptional.isEmpty()) {
                 return new ResponseEntity<>(USER_OR_COURSE_NOT_FOUND, HttpStatus.NOT_FOUND);
             }
 
-            AppUser user = userOptional.get();
+            UserInfo user = userOptional.get();
             Course course = courseOptional.get();
 
-            if (!user.isUniversity()) {
+            if (!user.getRoles().contains("UNIVERSITY")) {
                 course.getStudents().add(user);
                 courseService.save(course);
                 return new ResponseEntity<>(TO_COURSE_SUCCESSFULLY, HttpStatus.OK);
@@ -122,14 +126,14 @@ public class UserController extends BaseController{
             @PathVariable Long courseId) {
 
         try {
-            Optional<AppUser> userOptional = userService.getById(userId);
+            Optional<UserInfo> userOptional = userService.getById(userId);
             Optional<Course> courseOptional = courseService.getById(courseId);
 
             if (userOptional.isEmpty() || courseOptional.isEmpty()) {
                 return new ResponseEntity<>(USER_OR_COURSE_NOT_FOUND, HttpStatus.NOT_FOUND);
             }
 
-            AppUser student = userOptional.get();
+            UserInfo student = userOptional.get();
             Course course = courseOptional.get();
 
             if (student.getEnrolledCourses().contains(course)) {

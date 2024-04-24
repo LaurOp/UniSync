@@ -23,7 +23,7 @@ public class Message extends BaseModel {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private AppUser user;
+    private UserInfo user;
 
     @OneToMany(mappedBy = "parentMessage", cascade = CascadeType.ALL)
     private List<Reply> replies = new ArrayList<>();
@@ -37,11 +37,11 @@ public class Message extends BaseModel {
 
     private String content;
 
-    public AppUser getUser() {
+    public UserInfo getUser() {
         return user;
     }
 
-    public void setUser(AppUser user) {
+    public void setUser(UserInfo user) {
         this.user = user;
     }
 

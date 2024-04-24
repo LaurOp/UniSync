@@ -20,14 +20,10 @@ import static com.example.unisync.Config.Constants.USER_DELETED_SUCCES;
 public class RestrictedUserController extends BaseController{
 
     private final UserService userService;
-    private final CourseService courseService;
-    private final UserMapper userMapper;
 
     @Autowired
     public RestrictedUserController(UserService userService, CourseService courseService, UserMapper userMapper) {
         this.userService = userService;
-        this.courseService = courseService;
-        this.userMapper = userMapper;
     }
     @DeleteMapping("/{id}")
     @Profile("dev")

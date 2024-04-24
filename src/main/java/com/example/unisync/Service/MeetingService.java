@@ -4,7 +4,7 @@ import com.example.unisync.Exception.NotFoundException;
 import com.example.unisync.Model.Course;
 import com.example.unisync.Model.Invitation;
 import com.example.unisync.Model.Meeting;
-import com.example.unisync.Model.AppUser;
+import com.example.unisync.Model.UserInfo;
 import com.example.unisync.Repository.CourseRepository;
 import com.example.unisync.Repository.InvitationRepository;
 import com.example.unisync.Repository.MeetingRepository;
@@ -51,10 +51,10 @@ public class MeetingService implements BaseService<Meeting>{
     }
 
     public Meeting createMeeting(Long teacherUserId, Long courseId, Meeting meeting) throws NotFoundException {
-        AppUser teacher = userRepository.findById(teacherUserId).orElseThrow(() -> new NotFoundException(TEACHER_NOT_FOUND));
+        UserInfo teacher = userRepository.findById(teacherUserId).orElseThrow(() -> new NotFoundException(TEACHER_NOT_FOUND));
         Course course = courseRepository.findById(courseId).orElseThrow(() -> new NotFoundException(COURSE_NOT_FOUND));
 
-        if (!teacher.isTeacher()) {
+        if (!teacher.getRoles().contains("TEACHER")) {
             throw new NotFoundException(USER_IS_NOT_A_TEACHER);
         }
 
@@ -80,17 +80,17 @@ public class MeetingService implements BaseService<Meeting>{
     }
 
     private void createInvitationsForCourseMembers(Meeting meeting, Long courseId, List<Long> invitedUserIds) {
-        List<AppUser> courseMembers = courseRepository.findUsersByCourseId(courseId);
-        List<AppUser> invitedUsers = userRepository.findUsersByIds(invitedUserIds);
+        List<UserInfo> courseMembers = courseRepository.findUsersByCourseId(courseId);
+        List<UserInfo> invitedUsers = userRepository.findUsersByIds(invitedUserIds);
 
-        for (AppUser user : courseMembers) {
+        for (UserInfo user : courseMembers) {
             Invitation invitation = new Invitation();
             invitation.setMeeting(meeting);
             invitation.setInvitedUser(user);
             invitationRepository.save(invitation);
         }
 
-        for (AppUser user : invitedUsers) {
+        for (UserInfo user : invitedUsers) {
             if (!courseMembers.contains(user)) {
                 Invitation invitation = new Invitation();
                 invitation.setMeeting(meeting);
@@ -102,9 +102,9 @@ public class MeetingService implements BaseService<Meeting>{
 
 
     private void createDefaultAttendancesForCourseMembers(Meeting meeting, Long courseId, List<Long> invitedUserIds) {
-        List<AppUser> courseMembers = userRepository.findAllUsersInACourse(courseId);
+        List<UserInfo> courseMembers = userRepository.findAllUsersInACourse(courseId);
 
-        for (AppUser member : courseMembers) {
+        for (UserInfo member : courseMembers) {
             if (!invitedUserIds.contains(member.getId())) {
                 meetingAttendanceService.createDefaultAttendance(member.getId(), meeting.getId());
             }

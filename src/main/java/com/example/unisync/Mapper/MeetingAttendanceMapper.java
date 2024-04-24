@@ -18,8 +18,7 @@ public class MeetingAttendanceMapper {
     }
 
     public MeetingAttendance map(MeetingAttendanceDTO meetingAttendanceDTO) {
-        MeetingAttendance meetingAttendance = new MeetingAttendance();
-        return meetingAttendance;
+        return new MeetingAttendance();
     }
 
     public List<MeetingAttendanceDTO> map(List<MeetingAttendance> meetingAttendances) {

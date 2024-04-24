@@ -6,7 +6,7 @@ import com.example.unisync.Exception.UnauthorizedException;
 import com.example.unisync.Model.Course;
 import com.example.unisync.Model.Message;
 import com.example.unisync.Model.Reply;
-import com.example.unisync.Model.AppUser;
+import com.example.unisync.Model.UserInfo;
 import com.example.unisync.Repository.CourseRepository;
 import com.example.unisync.Repository.MessageRepository;
 import com.example.unisync.Repository.ReplyRepository;
@@ -53,7 +53,7 @@ public class MessageService implements BaseService<Message>{
     }
 
     public Message postMessage(MessageDTO messageDTO) {
-        AppUser user = userRepository.findById(messageDTO.getUserId()).orElseThrow(() -> new EntityNotFoundException(USER_NOT_FOUND));
+        UserInfo user = userRepository.findById(messageDTO.getUserId()).orElseThrow(() -> new EntityNotFoundException(USER_NOT_FOUND));
         Course course = courseRepository.findById(messageDTO.getcourseId()).orElseThrow(() -> new EntityNotFoundException(COURSE_NOT_FOUND));
 
         if (!user.getEnrolledCourses().contains(course)) {
@@ -77,7 +77,7 @@ public class MessageService implements BaseService<Message>{
     }
 
     public Reply postReply(ReplyDTO replyDTO) {
-        AppUser user = userRepository.findById(replyDTO.getUserId()).orElseThrow(() -> new EntityNotFoundException(USER_NOT_FOUND));
+        UserInfo user = userRepository.findById(replyDTO.getUserId()).orElseThrow(() -> new EntityNotFoundException(USER_NOT_FOUND));
         Message parentMessage = messageRepository.findById(replyDTO.getParentMessageId()).orElseThrow(() -> new EntityNotFoundException(PARENT_MESSAGE_NOT_FOUND));
 
         if (!user.getEnrolledCourses().contains(parentMessage.getCourse())) {

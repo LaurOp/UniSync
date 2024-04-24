@@ -12,7 +12,7 @@ public class MeetingAttendance {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private AppUser user;
+    private UserInfo user;
 
     @ManyToOne
     @JoinColumn(name = "meeting_id")
@@ -29,11 +29,11 @@ public class MeetingAttendance {
         this.id = id;
     }
 
-    public AppUser getUser() {
+    public UserInfo getUser() {
         return user;
     }
 
-    public void setUser(AppUser user) {
+    public void setUser(UserInfo user) {
         this.user = user;
     }
 

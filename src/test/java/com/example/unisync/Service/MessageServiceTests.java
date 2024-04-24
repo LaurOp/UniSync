@@ -5,7 +5,6 @@ import com.example.unisync.DTO.ReplyDTO;
 import com.example.unisync.Exception.UnauthorizedException;
 import com.example.unisync.Model.Course;
 import com.example.unisync.Model.Message;
-import com.example.unisync.Model.AppUser;
 import com.example.unisync.Repository.CourseRepository;
 import com.example.unisync.Repository.MessageRepository;
 import com.example.unisync.Repository.ReplyRepository;

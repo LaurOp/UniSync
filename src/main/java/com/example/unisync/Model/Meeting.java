@@ -15,7 +15,7 @@ public class Meeting extends BaseModel {
 
     @ManyToOne
     @JoinColumn(name = "created_by_id")
-    private AppUser createdBy;
+    private UserInfo createdBy;
 
     @OneToMany(mappedBy = "meeting", cascade = CascadeType.ALL)
     private List<MeetingAttendance> meetingAttendances = new ArrayList<>();
@@ -42,11 +42,11 @@ public class Meeting extends BaseModel {
         this.course = course;
     }
 
-    public AppUser getCreatedBy() {
+    public UserInfo getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(AppUser createdBy) {
+    public void setCreatedBy(UserInfo createdBy) {
         this.createdBy = createdBy;
     }
 

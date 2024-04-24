@@ -1,5 +1,8 @@
-package com.example.unisync.Config.Auth;
+package com.example.unisync.Controller;
 
+import com.example.unisync.Config.Auth.AuthRequest;
+import com.example.unisync.Config.Auth.JwtService;
+import com.example.unisync.Config.Auth.UserInfoService;
 import com.example.unisync.Model.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,6 +25,11 @@ public class AuthController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @GetMapping("/welcome")
+    public String welcomePage() {
+        return "Welcome; This is unprotected";
+    }
+
     @PostMapping("/addNewUser")
     public String addNewUser(@RequestBody UserInfo userInfo) {
         return service.addUser(userInfo);
@@ -33,10 +41,16 @@ public class AuthController {
         return "Welcome to User Profile";
     }
 
-    @GetMapping("/user/admin")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public String adminProfile() {
-        return "Welcome to Admin Profile";
+    @GetMapping("/user/teacher")
+    @PreAuthorize("hasAuthority('TEACHER')")
+    public String teacherProfile() {
+        return "Welcome to Teacher Profile";
+    }
+
+    @GetMapping("/user/university")
+    @PreAuthorize("hasAuthority('UNIVERSITY')")
+    public String universityProfile() {
+        return "Welcome to University Profile";
     }
 
     @PostMapping("/generateToken")

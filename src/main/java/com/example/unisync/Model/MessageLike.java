@@ -8,17 +8,17 @@ import jakarta.persistence.ManyToOne;
 public class MessageLike extends BaseModel{
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private AppUser user;
+    private UserInfo user;
 
     @ManyToOne
     @JoinColumn(name = "message_id")
     private Message message;
 
-    public AppUser getUser() {
+    public UserInfo getUser() {
         return user;
     }
 
-    public void setUser(AppUser user) {
+    public void setUser(UserInfo user) {
         this.user = user;
     }
 
