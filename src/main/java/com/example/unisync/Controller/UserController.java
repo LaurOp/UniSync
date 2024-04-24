@@ -1,5 +1,6 @@
 package com.example.unisync.Controller;
 
+import com.example.unisync.Config.Auth.UserInfoDetails;
 import com.example.unisync.Mapper.UserMapper;
 import com.example.unisync.Model.Course;
 import com.example.unisync.Model.UserInfo;
@@ -31,19 +32,22 @@ public class UserController extends BaseController{
         this.userMapper = userMapper;
     }
 
-    @PostMapping("/{userId}/CreateCourse")
+    @PostMapping("/CreateCourse")
     @PreAuthorize("hasAuthority('UNIVERSITY')")
-    public ResponseEntity<String> createCourseForUserEndpoint(@PathVariable Long userId, @RequestBody Course course) {
+    public ResponseEntity<String> createCourseForUserEndpoint(@RequestBody Course course) {
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            UserInfo currentUser = (UserInfo) authentication.getPrincipal();
+            UserInfoDetails currentUserDetails = (UserInfoDetails) authentication.getPrincipal();
+            var currentUser = userService.getByName(currentUserDetails.getUsername());
 
-            Optional<UserInfo> user = userService.getById(userId);
-            if (user.isEmpty()) {
+            try{
+                currentUser.get();
+
+            } catch (Exception ignored){
                 return new ResponseEntity<>(USER_NOT_FOUND, HttpStatus.NOT_FOUND);
             }
 
-            userService.createCourseIfUniversity(user.get(), course);
+            userService.createCourseIfUniversity(currentUser.get(), course);
             return new ResponseEntity<>(COURSE_CREATED_SUCCESSFULLY, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(ERROR_CREATING_COURSE + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -62,6 +66,7 @@ public class UserController extends BaseController{
 //        }
 //    }
 
+    @PreAuthorize("hasAnyAuthority('UNIVERSITY','TEACHER')")
     @PutMapping("/{userId}/assign-course-admin/{courseId}")
     public ResponseEntity<String> assignCourseAdmin(
             @PathVariable Long userId,
@@ -91,6 +96,7 @@ public class UserController extends BaseController{
         }
     }
 
+    @PreAuthorize("hasAnyAuthority('UNIVERSITY','TEACHER')")
     @PostMapping("/{userId}/add-student-to-course/{courseId}")
     public ResponseEntity<String> addStudentToCourse(
             @PathVariable Long userId,
@@ -120,20 +126,23 @@ public class UserController extends BaseController{
         }
     }
 
-    @PostMapping("/{userId}/enroll-in-course/{courseId}")
+    @PreAuthorize("hasAuthority('USER')")
+    @PostMapping("/enroll-in-course/{courseId}")
     public ResponseEntity<String> enrollInCourse(
-            @PathVariable Long userId,
             @PathVariable Long courseId) {
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserInfoDetails currentUserDetails = (UserInfoDetails) authentication.getPrincipal();
+        var currentUser = userService.getByName(currentUserDetails.getUsername());
+
         try {
-            Optional<UserInfo> userOptional = userService.getById(userId);
             Optional<Course> courseOptional = courseService.getById(courseId);
 
-            if (userOptional.isEmpty() || courseOptional.isEmpty()) {
+            if (currentUser.isEmpty() || courseOptional.isEmpty()) {
                 return new ResponseEntity<>(USER_OR_COURSE_NOT_FOUND, HttpStatus.NOT_FOUND);
             }
 
-            UserInfo student = userOptional.get();
+            UserInfo student = currentUser.get();
             Course course = courseOptional.get();
 
             if (student.getEnrolledCourses().contains(course)) {

@@ -22,6 +22,10 @@ public class UserService implements BaseService<UserInfo> {
         this.courseRepository = courseRepository;
     }
 
+    public Optional<UserInfo> getByName(String name){
+        return userRepository.findByUsername(name);
+    }
+
     public void createCourseIfUniversity(UserInfo user) {
         if (user.getRoles().contains("UNIVERSITY")) {
             Course newCourse = new Course();
