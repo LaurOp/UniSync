@@ -11,6 +11,8 @@ import com.example.unisync.Repository.MeetingRepository;
 import com.example.unisync.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -66,6 +68,10 @@ public class MeetingService implements BaseService<Meeting>{
 
     public List<Meeting> getMeetingsByCourseId(Long courseId) {
         return meetingRepository.findByCourseId(courseId);
+    }
+
+    public Page<Meeting> getMeetingsByCourseId(Long courseId, Pageable pageable) {
+        return meetingRepository.findByCourseId(courseId, pageable);
     }
 
     public Meeting createMeetingWithInvitations(Long teacherUserId, Long courseId, Meeting meeting, List<Long> invitedUserIds) {

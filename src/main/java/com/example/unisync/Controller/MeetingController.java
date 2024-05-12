@@ -9,6 +9,7 @@ import com.example.unisync.Model.Meeting;
 import com.example.unisync.Service.MeetingService;
 import com.example.unisync.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -58,9 +59,23 @@ public class MeetingController extends BaseController{
     }
 
     @GetMapping("/byCourse/{courseId}")
-    public ResponseEntity<List<MeetingDTO>> getMeetingsByCourseId(@PathVariable Long courseId) {
-        List<Meeting> meetings = meetingService.getMeetingsByCourseId(courseId);
-        List<MeetingDTO> meetingDTOs = meetingMapper.map(meetings);
-        return new ResponseEntity<>(meetingDTOs, HttpStatus.OK);
+    public ResponseEntity<Page<MeetingDTO>> getMeetingsByCourseId(
+            @PathVariable Long courseId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestHeader(defaultValue = "startTime") String sort,
+            @RequestParam(defaultValue = "asc") String direction) {
+        try {
+            Sort.Direction sortDirection = Sort.Direction.fromString(direction);
+            Pageable pageable = PageRequest.of(page, size, sortDirection, sort);
+            Page<Meeting> meetings = meetingService.getMeetingsByCourseId(courseId, pageable);
+
+            List<MeetingDTO> meetingDTOs = meetingMapper.map(meetings.getContent());
+            Page<MeetingDTO> meetingPage = new PageImpl<>(meetingDTOs, pageable, meetings.getTotalElements());
+
+            return new ResponseEntity<>(meetingPage, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
